@@ -4,12 +4,13 @@ namespace App\Service;
 
 use App\Entity\BigFootSighting;
 use App\Model\BigFootSightingScore;
+use App\Scoring\ScoringFactorInterface;
 
 class SightingScorer
 {
 
-    /** @var [ScoringFactorInterface] $scoringFactors */
-    public function __construct(private array $scoringFactors)
+    /** @var ScoringFactorInterface[] $scoringFactors */
+    public function __construct(private iterable $scoringFactors)
     {}
     public function score(BigFootSighting $sighting): BigFootSightingScore
     {

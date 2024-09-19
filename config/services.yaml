@@ -32,7 +32,4 @@ services:
 
     App\Service\SightingScorer:
         arguments:
-            $scoringFactors:
-                - '@App\Scoring\CoordinatesFactor'
-                - '@App\Scoring\DescriptionFactor'
-                - '@App\Scoring\TitleFactor'
+            $scoringFactors: !tagged_iterator scoring.factor
