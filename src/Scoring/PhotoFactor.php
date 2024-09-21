@@ -10,7 +10,7 @@ class PhotoFactor implements ScoringFactorInterface
     public function score(BigFootSighting $sighting): int
     {
         if (count($sighting->getImages()) === 0){
-            throw new \InvalidArgumentException('Invalid BigFootSighting');
+            return 0;
         }
 
         $score = 0;
