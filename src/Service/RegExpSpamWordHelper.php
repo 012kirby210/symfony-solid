@@ -2,9 +2,11 @@
 
 namespace App\Service;
 
-class RegExpSpamWordHelper
+use App\Comment\CommentSpamCounterInterface;
+
+class RegExpSpamWordHelper implements CommentSpamCounterInterface
 {
-    public function getMatchedSpamWord(string $content): array
+    private function getMatchedSpamWord(string $content): array
     {
         $badWordsOnComment = [];
 
@@ -24,5 +26,10 @@ class RegExpSpamWordHelper
             'earn money',
             'SymfonyCats',
         ];
+    }
+
+    public function countSpamWords(string $content): int
+    {
+        return count($this->getMatchedSpamWord($content));
     }
 }
