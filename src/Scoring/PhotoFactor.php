@@ -20,4 +20,13 @@ class PhotoFactor implements ScoringFactorInterface
 
         return $score;
     }
+
+    public function adjustScore(int $finalScore, BigFootSighting $sighting): int
+    {
+        $photosCount = count($sighting->getImages());
+        if ($finalScore > 50 && $photosCount > 2) {
+            $finalScore += $photosCount * 5;
+        }
+        return $finalScore;
+    }
 }

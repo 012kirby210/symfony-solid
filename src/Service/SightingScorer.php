@@ -18,10 +18,11 @@ class SightingScorer
         $score = 0;
 
         foreach ($this->scoringFactors as $factor) {
-            if ($factor instanceof PhotoFactor && count($sighting->getImages()) === 0) {
-                continue;
-            }
             $score += $factor->score($sighting);
+        }
+
+        foreach ($this->scoringFactors as $factor) {
+            $score += $factor->adjustScore($score, $sighting);
         }
 
         return new BigFootSightingScore($score);
