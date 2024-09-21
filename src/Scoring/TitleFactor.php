@@ -23,9 +23,4 @@ class TitleFactor implements ScoringFactorInterface
 
         return $score;
     }
-
-    public function adjustScore(int $finalScore, BigFootSighting $sighting): int
-    {
-        return $finalScore;
-    }
 }
