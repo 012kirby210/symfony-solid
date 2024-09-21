@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\BigFootSighting;
 use App\Form\BigfootSightingType;
+use App\Model\DebuggableBigFootSightingScore;
 use App\Service\SightingScorer;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -34,6 +35,19 @@ class BigFootSightingController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'New BigFoot Sighting created successfully!');
+
+            // instanceof : signal d'une cassure du principe de Liskov
+            // pour revenir dans le giron de Liskov il faut forcer l'injecteur de dépendance
+            // et là, on rentre dans l'horreur fantastique :
+            // Pour être intègre par rapport à un principe de développement
+            // on couple fortement une partie du runtime (on force le chargement de service)
+
+            // Pourquoi l'intégrité d'un principe devrait tenir sur un choix de contraintes
+            // du contexte d'exécution du programme !?
+
+            if ($bfsScore instanceof DebuggableBigFootSightingScore) {
+                $this->addFlash('success', sprintf("This scoring took %f ms", $bfsScore->getCalculationTime() * 1000));
+            }
 
             return $this->redirectToRoute('app_sighting_show', [
                 'id' => $sighting->getId()
